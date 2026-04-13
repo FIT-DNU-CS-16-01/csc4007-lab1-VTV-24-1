@@ -1,9 +1,0 @@
-# Data Card (copy từ Google Docs template)
-
-Link Google Docs: ...
-
-## Version
-- v1.0 — ...
-- v1.1 — ...
-
-Dán nội dung Data Card bên dưới.
