@@ -1,134 +1,428 @@
-DATA CARD — IMDB Dataset (Lab 1)
-1. ASK
+# Dataset Name (IMDB)
 
-Người đọc:
+IMDB dataset là tập dữ liệu review phim dùng cho bài toán sentiment analysis. Dataset gồm các đoạn văn bản (review) được gán nhãn positive/negative. Đây là dataset phổ biến trong NLP research, phù hợp cho bài toán phân loại văn bản, tuy nhiên vẫn tồn tại duplicate, label noise và outliers cần xử lý trước khi sử dụng production.
 
-Sinh viên NLP
-ML Engineer
-Researcher
+---
 
-Họ cần quyết định:
+#### Dataset Link
+N/A — dataset sử dụng từ nguồn public (IMDB/Kaggle).
 
-Dataset có đủ chất lượng để train model không?
-Có cần cleaning / relabel không?
+---
 
-Cảnh báo cần biết:
+#### Data Card Author(s)
+- N/A — Owner
+- N/A — Contributor
+- N/A — Manager
 
-Có duplicate (~1.6%)
-Có label noise (~2%)
-Có outlier text rất dài (>10k chars)
-Rủi ro leakage nếu preprocessing sai thứ tự
-2. Dataset Overview
-Dataset: IMDB movie reviews (sentiment classification)
-Số lượng: 50,000 samples
-Labels: 2 lớp (0 = negative, 1 = positive)
-Phân bố: cân bằng (25,000 mỗi lớp)
-Split:
-Train: 40,000
-Val: 5,000
-Test: 5,000
-Text statistics:
-Min length: 32
-Median: 954
-P95: 3328
-Max: 13,593
-3. Data Quality & Validation (Great Expectations)
-GE result: ❌ FAIL (5/6 passed, 83.33%)
-Lỗi:
-len_chars vượt quá giới hạn (1–10000)
-Có 6 mẫu quá dài (max = 13,593)
-Tại sao nguy hiểm:
-Model có thể bias theo độ dài
-Training không ổn định (outlier)
-Cách xử lý:
-Cắt text (truncate)
-Hoặc loại bỏ outliers
-4. Data Auditing (Before vs After)
-Vấn đề 1 — HTML artifacts
-Trước: ~29,200 mẫu có <br> / HTML
-Sau: 0
+---
 
-👉 Nguy hiểm:
+## Authorship
+### Publishers
+#### Publishing Organization(s)
+N/A — dataset public.
 
-Model học “shortcut” từ HTML thay vì nội dung
+#### Industry Type(s)
+- Academic - Tech
 
-👉 Giải pháp:
+#### Contact Detail(s)
+- Publishing POC: N/A  
+- Affiliation: N/A  
+- Contact: N/A  
+- Mailing List: N/A  
+- Website: N/A  
 
-Đã clean thành công
-Vấn đề 2 — Duplicates
-~832 mẫu duplicate (~1.66%)
+---
 
-👉 Nguy hiểm:
+### Dataset Owners
+#### Team(s)
+N/A — dataset public.
 
-Data leakage
-Accuracy ảo
+#### Contact Detail(s)
+- Dataset Owner(s): N/A  
+- Affiliation: N/A  
+- Contact: N/A  
+- Group Email: N/A  
+- Website: N/A  
 
-👉 Giải pháp:
+#### Author(s)
+- N/A
 
-Deduplicate hoặc giữ nhưng cần cảnh báo
-Vấn đề 3 — Data leakage
-TF-IDF fit trên toàn bộ data (sai)
+---
 
-👉 Nguy hiểm:
+### Funding Sources
+#### Institution(s)
+- N/A
 
-Test set bị “lộ thông tin”
+#### Funding or Grant Summary(ies)
+N/A — không có thông tin funding.
 
-👉 Giải pháp:
+**Additional Notes:** Dataset public.
 
-Split trước → fit trên train only
-5. Annotations & Labeling (Cleanlab)
-Nghi vấn label lỗi: 1000 mẫu (~2%)
-Review 5 mẫu (từ CSV):
-ID	Nhận xét	Kết luận
-11668	Review rất tích cực	Giữ nhãn
-22259	Nội dung tiêu cực	Giữ nhãn
-16634	Review tiêu cực rõ	Giữ nhãn
-31245	Nội dung trung tính/khó	Ambiguous
-32355	Có thể positive	Ambiguous
+---
 
-👉 Kết luận:
+## Dataset Overview
+#### Data Subject(s)
+- Non-Sensitive Data about people
 
-Có label noise nhẹ (~2%)
-Không nghiêm trọng nhưng cần review nếu production
-6. Transformations
-Đã thực hiện:
-Remove HTML tags
-Chuẩn hóa text
-Split train/val/test đúng
-So sánh:
-HTML: 29k → 0
-Length: giảm nhẹ (median 970 → 954)
+---
 
-👉 Kết quả:
+#### Dataset Snapshot
 
-Dữ liệu sạch hơn
-Giảm bias từ HTML
-7. Limitations & Risks
-⚠️ Hạn chế:
-Vẫn còn duplicate (~1.6%)
-Vẫn có HTML entity (11 mẫu)
-Có outlier text dài
-Có label noise (~2%)
-⚠️ Rủi ro:
-Model học theo độ dài
-Shortcut learning
-Overfitting nếu duplicate
-8. Intended Use
-✅ Phù hợp:
-NLP sentiment classification
-Research / học tập
-❌ Không phù hợp:
-Production nếu chưa clean kỹ
-Task khác ngoài sentiment
-9. Conclusion
+| Category | Data |
+|----------|------|
+| Size of Dataset | N/A |
+| Number of Instances | 50000 |
+| Number of Fields | 3 |
+| Labeled Classes | 2 |
+| Number of Labels | 50000 |
+| Average Labels Per Instance | 1 |
+| Algorithmic Labels | 0 |
+| Human Labels | 50000 |
+| Other Characteristics | text data |
 
-Dataset IMDB có:
+**Above:** Snapshot tổng quan dataset IMDB.
 
-Chất lượng khá tốt
-Đã clean HTML thành công
-Nhưng vẫn tồn tại:
-duplicates
-label noise
-outliers
+**Additional Notes:** Dữ liệu cân bằng 50/50.
 
-👉 Có thể dùng cho training, nhưng cần xử lý thêm nếu dùng production.
+---
+
+#### Content Description
+Dataset gồm các review phim dạng text.
+
+**Additional Notes:** Không có missing values.
+
+---
+
+#### Descriptive Statistics
+
+Statistic | text_length
+--- | ---
+min | 32
+median | 954
+p95 | 3328
+max | 13593
+
+**Above:** Thống kê độ dài text.
+
+**Additional Notes:** Có outliers >10000.
+
+---
+
+### Sensitivity of Data
+#### Sensitivity Type(s)
+- None
+
+---
+
+#### Field(s) with Sensitive Data
+
+**Intentional Collected Sensitive Data**
+
+N/A — dataset không chứa dữ liệu nhạy cảm.
+
+**Unintentionally Collected Sensitive Data**
+
+N/A — không có dữ liệu suy luận nhạy cảm.
+
+**Additional Notes:** Review công khai.
+
+---
+
+#### Security and Privacy Handling
+N/A — không có dữ liệu nhạy cảm.
+
+---
+
+#### Risk Type(s)
+- Indirect Risk
+- Residual Risk
+
+---
+
+#### Supplemental Link(s)
+N/A
+
+---
+
+#### Risk(s) and Mitigation(s)
+
+- Duplicate → deduplicate  
+- Label noise → review thêm  
+- Outliers → truncate  
+- Leakage → fit train only  
+
+---
+
+### Dataset Version and Maintenance
+#### Maintenance Status
+Limited Maintenance
+
+---
+
+#### Version Details
+- Current Version: 1.0  
+- Last Updated: 04/2026  
+- Release Date: N/A  
+
+---
+
+#### Maintenance Plan
+N/A — dataset static.
+
+---
+
+#### Next Planned Update(s)
+N/A
+
+---
+
+#### Expected Change(s)
+N/A
+
+---
+
+## Example of Data Points
+#### Primary Data Modality
+- Text Data
+
+---
+
+#### Sampling of Data Points
+N/A
+
+---
+
+#### Data Fields
+
+| Field Name | Description |
+|------------|------------|
+| id | ID |
+| text | review |
+| label | sentiment |
+
+---
+
+#### Typical Data Point
+N/A
+
+---
+
+#### Atypical Data Point
+N/A
+
+---
+
+## Motivations & Intentions
+### Motivations
+#### Purpose(s)
+- Research
+
+---
+
+#### Domain(s) of Application
+`NLP`, `Sentiment Analysis`
+
+---
+
+#### Motivating Factor(s)
+Dataset phục vụ huấn luyện model phân loại cảm xúc văn bản.
+
+---
+
+### Intended Use
+#### Dataset Use(s)
+- Safe for research use
+
+---
+
+#### Suitable Use Case(s)
+- Sentiment classification  
+- NLP research  
+
+---
+
+#### Unsuitable Use Case(s)
+- Production khi chưa clean  
+- Task ngoài sentiment  
+
+---
+
+#### Research and Problem Space(s)
+Phân loại cảm xúc văn bản.
+
+---
+
+#### Citation Guidelines
+N/A
+
+---
+
+## Access, Rentention, & Wipeout
+### Access
+#### Access Type
+- External - Open Access
+
+---
+
+#### Documentation Link(s)
+N/A
+
+---
+
+#### Prerequisite(s)
+N/A
+
+---
+
+#### Policy Link(s)
+N/A
+
+---
+
+#### Access Control List(s)
+N/A
+
+---
+
+### Retention
+#### Duration
+N/A
+
+#### Policy Summary
+N/A
+
+#### Process Guide
+N/A
+
+#### Exception(s) and Exemption(s)
+N/A
+
+---
+
+### Wipeout and Deletion
+#### Duration
+N/A
+
+#### Deletion Event Summary
+N/A
+
+#### Acceptable Means of Deletion
+N/A
+
+#### Post-Deletion Obligations
+N/A
+
+#### Operational Requirement(s)
+N/A
+
+#### Exceptions and Exemptions
+N/A
+
+---
+
+## Provenance
+### Collection
+#### Method(s) Used
+- Taken from other existing datasets
+
+---
+
+#### Methodology Detail(s)
+N/A — dataset public.
+
+---
+
+#### Source Description(s)
+- Public IMDB reviews dataset
+
+---
+
+#### Collection Cadence
+- Static
+
+---
+
+## Transformations
+### Synopsis
+#### Transformation(s) Applied
+- Cleaning Mismatched Values
+
+---
+
+#### Field(s) Transformed
+
+| Field Name | Source & Target |
+|------------|----------------|
+| text | raw → cleaned |
+
+---
+
+#### Library(ies) and Method(s) Used
+
+- Remove HTML tags  
+- Normalize text  
+
+---
+
+#### Comparative Summary
+
+| Metric | Before | After |
+|--------|--------|------|
+| HTML tags | 29202 | 0 |
+| median length | 970 | 954 |
+
+---
+
+#### Residual & Other Risk(s)
+
+- Duplicate (~1.6%)  
+- Label noise (~2%)  
+- Outliers  
+
+---
+
+## Annotations & Labeling
+#### Annotation Workforce Type
+- Machine-Generated
+
+---
+
+#### Annotation Distribution(s)
+
+| Label | Count |
+|------|------|
+| 0 | 25000 |
+| 1 | 25000 |
+
+---
+
+## Validation Types
+#### Method(s)
+- Data Type Validation  
+- Range Validation  
+- Consistency Validation  
+
+---
+
+#### Breakdown(s)
+- Evaluated: 6  
+- Passed: 5  
+- Failed: 1  
+
+---
+
+## Sampling Methods
+#### Method(s) Used
+- Random Sampling
+
+---
+
+## Known Applications & Benchmarks
+#### ML Application(s)
+Classification
+
+---
+
+## Reflections on Data
+
+Dataset phù hợp cho nghiên cứu NLP nhưng cần xử lý thêm trước khi dùng production do tồn tại duplicate, noise và outliers.
